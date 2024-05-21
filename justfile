@@ -1,6 +1,8 @@
 project := 'nginx-ip'
 version := '6'
 
+nginx := 'openresty -e stderr -p . -c nginx.conf'
+
 _list:
   @just --list
 
@@ -13,4 +15,9 @@ build:
   docker build --pull --no-cache --force-rm --tag "{{project}}:{{version}}" --tag "{{project}}:latest" .
 
 run:
-  openresty -p . -c nginx.conf
+  #!/bin/sh
+  {{nginx}} &
+  while true; do
+    inotifywait -q --format '*** %w has been modified, reloading' -e modify nginx.conf
+    {{nginx}} -s reload
+  done
