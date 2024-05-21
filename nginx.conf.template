@@ -18,7 +18,7 @@ http {
     }
 
     server {
-        listen 80;
+        listen ${LISTEN_PORT};
         client_max_body_size 1;
         types {}
         root .;
