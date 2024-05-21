@@ -15,7 +15,7 @@ http {
     lua_package_path "$prefix/?.lua;;";
 
     init_by_lua_block {
-        require('ip')
+        require('app')
     }
 
     server {
@@ -35,7 +35,14 @@ http {
         location = / {
             default_type text/plain;
             content_by_lua_block {
-                require('ip').print()
+                require('app').main()
+            }
+        }
+
+        location = /headers {
+            default_type text/plain;
+            content_by_lua_block {
+                require('app').headers()
             }
         }
 

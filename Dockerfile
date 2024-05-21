@@ -6,7 +6,7 @@ ARG VERSION
 ARG LISTEN_PORT
 WORKDIR /build/
 RUN : "${VERSION:?}"
-COPY nginx.conf.template ip.lua favicon.ico ./
+COPY nginx.conf.template app.lua favicon.ico ./
 RUN apk -U add envsubst && \
     export LUA_CODE_CACHE=on && \
     envsubst '$LISTEN_PORT $LUA_CODE_CACHE' < nginx.conf.template > nginx.conf

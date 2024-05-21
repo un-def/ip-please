@@ -2,12 +2,13 @@ local string_gmatch = string.gmatch
 local table_insert = table.insert
 local ngx_var = ngx.var
 local ngx_say = ngx.say
+local ngx_req_get_headers = ngx.req.get_headers
 
 local number_of_proxies = os.getenv('NUMBER_OF_PROXIES') or 0
 
 local _M = {}
 
-local get = function()
+local get_ip = function()
     if number_of_proxies == 0 then
         return ngx_var.remote_addr
     end
@@ -26,10 +27,25 @@ local get = function()
     return ips[proxy_index]
 end
 
-_M.get = get
+_M.main = function()
+    ngx_say(get_ip())
+end
 
-_M.print = function()
-    ngx_say(get())
+_M.headers = function()
+    local headers, err = ngx_req_get_headers(nil, true)
+    if err and err ~= 'truncated' then
+        ngx.status = 500
+    end
+    for header, value_or_values in pairs(headers) do
+        if type(value_or_values) == 'table' then
+            for _, value in ipairs(value_or_values) do
+                ngx_say(header, ': ', value)
+            end
+        else
+            ngx_say(header, ': ', value_or_values)
+        end
+    end
+
 end
 
 return _M
