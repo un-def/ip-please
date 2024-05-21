@@ -1,5 +1,5 @@
 project := 'nginx-ip'
-version := '9'
+version := '10'
 
 nginx := 'openresty -e stderr -p . -c nginx.conf'
 
@@ -19,7 +19,7 @@ build:
   docker build . \
     --pull --no-cache --force-rm \
     --build-arg="VERSION={{version}}" \
-    --build-arg="LISTEN_PORT=4444" \
+    --build-arg="LISTEN_PORT=80" \
     --tag "{{project}}:{{version}}" --tag "{{project}}:latest"
 
 generate-nginx-conf:
