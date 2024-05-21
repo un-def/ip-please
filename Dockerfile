@@ -14,7 +14,7 @@ RUN apk -U add envsubst && \
 FROM openresty/openresty:alpine-apk
 ARG VERSION
 ARG LISTEN_PORT
-WORKDIR /opt/nginx-ip/
+WORKDIR /opt/ip-please/
 COPY --from=builder /build/ ./
 EXPOSE ${LISTEN_PORT}
 CMD ["/usr/local/openresty/bin/openresty", "-e", "stderr", "-p", ".", "-c", "nginx.conf"]
