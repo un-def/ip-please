@@ -16,6 +16,6 @@ ARG LISTEN_PORT
 WORKDIR /opt/nginx-ip/
 COPY --from=builder /build/ ./
 EXPOSE ${LISTEN_PORT}
-CMD ["/usr/local/openresty/bin/openresty", "-e", "stderr" "-p", ".", "-c", "nginx.conf"]
+CMD ["/usr/local/openresty/bin/openresty", "-e", "stderr", "-p", ".", "-c", "nginx.conf"]
 LABEL maintainer="Dmitry Meyer <me@undef.im>"
 LABEL version="${VERSION}"
