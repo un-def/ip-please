@@ -30,7 +30,6 @@ http {
 
         location = /favicon.ico {
             default_type image/vnd.microsoft.icon;
-            try_files /favicon.ico =404;
         }
 
         location = / {
