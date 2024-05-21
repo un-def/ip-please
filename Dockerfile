@@ -2,8 +2,7 @@ FROM openresty/openresty:alpine-apk
 
 WORKDIR /opt/nginx-ip/
 
-COPY nginx.conf nginx.conf
-COPY ip.lua ip.lua
+COPY nginx.conf ip.lua favicon.ico ./
 
 EXPOSE 80
 
