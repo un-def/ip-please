@@ -9,7 +9,7 @@ RUN : "${VERSION:?}"
 COPY nginx.conf.template ip.lua favicon.ico ./
 RUN apk -U add envsubst && \
     export LUA_CODE_CACHE=on && \
-    envsubst '$LISTEN_PORT' < nginx.conf.template > nginx.conf
+    envsubst '$LISTEN_PORT $LUA_CODE_CACHE' < nginx.conf.template > nginx.conf
 
 FROM openresty/openresty:alpine-apk
 ARG VERSION

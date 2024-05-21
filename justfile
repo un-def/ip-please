@@ -1,5 +1,5 @@
 project := 'nginx-ip'
-version := '11'
+version := '12'
 
 nginx := 'openresty -e stderr -p . -c nginx.conf'
 
