@@ -1,9 +1,10 @@
 project := 'nginx-ip'
-version := '10'
+version := '11'
 
 nginx := 'openresty -e stderr -p . -c nginx.conf'
 
-export LISTEN_PORT := env_var_or_default('LISTEN_PORT', '80')
+export LISTEN_PORT := env_var_or_default('LISTEN_PORT', '8080')
+export LUA_CODE_CACHE := env_var_or_default('LUA_CODE_CACHE', 'off')
 
 set dotenv-load
 
@@ -19,11 +20,10 @@ build:
   docker build . \
     --pull --no-cache --force-rm \
     --build-arg="VERSION={{version}}" \
-    --build-arg="LISTEN_PORT=80" \
     --tag "{{project}}:{{version}}" --tag "{{project}}:latest"
 
 generate-nginx-conf:
-  envsubst '$LISTEN_PORT' < nginx.conf.template > nginx.conf
+  envsubst '$LISTEN_PORT $LUA_CODE_CACHE' < nginx.conf.template > nginx.conf
 
 run:
   #!/bin/sh

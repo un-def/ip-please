@@ -11,6 +11,7 @@ http {
     access_log off;
     server_tokens off;
 
+    lua_code_cache ${LUA_CODE_CACHE};
     lua_package_path "$prefix/?.lua;;";
 
     init_by_lua_block {
