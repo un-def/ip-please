@@ -12,7 +12,7 @@ _list:
 
 build:
   #!/bin/sh
-  if docker image inspect "{{project}}:{{version}}" > /dev/null; then
+  if docker image inspect "{{project}}:{{version}}" > /dev/null 2>&1; then
     echo "{{project}}:{{version}} already exists"
     exit 1
   fi
