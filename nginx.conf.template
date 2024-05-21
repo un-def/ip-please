@@ -6,6 +6,7 @@ error_log stderr info;
 events {}
 
 env NUMBER_OF_PROXIES;
+env HIDE_PROXY_HEADERS;
 
 http {
     access_log off;
