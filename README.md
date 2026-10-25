@@ -9,8 +9,8 @@ $ curl https://ip.undef.im
 
 ```
 $ curl https://ip.undef.im/headers
-Host: ip.undef.im
-User-Agent: curl/7.81.0
 Accept: */*
 Accept-Encoding: gzip
+Host: ip.undef.im
+User-Agent: curl/8.18.0
 ```
