@@ -3,6 +3,7 @@ local string_gmatch = string.gmatch
 local string_lower = string.lower
 local table_insert = table.insert
 local ngx_var = ngx.var
+local ngx_exit = ngx.exit
 local ngx_say = ngx.say
 local ngx_req_get_headers = ngx.req.get_headers
 
@@ -80,7 +81,7 @@ end
 _M.headers = function()
     local headers, err = ngx_req_get_headers(nil, true)
     if err and err ~= 'truncated' then
-        ngx.status = 500
+        return ngx_exit(500)
     end
     for header, value_or_values in pairs(headers) do
         if type(value_or_values) == 'table' then
