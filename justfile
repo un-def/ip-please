@@ -3,13 +3,10 @@ version := '2'
 
 nginx := 'openresty -e stderr -p . -c nginx.conf'
 
-export LISTEN_PORT := env_var_or_default('LISTEN_PORT', '8080')
-export LUA_CODE_CACHE := env_var_or_default('LUA_CODE_CACHE', 'off')
+export LISTEN_PORT := env('LISTEN_PORT', '8080')
+export LUA_CODE_CACHE := env('LUA_CODE_CACHE', 'off')
 
 set dotenv-load
-
-_list:
-  @just --list
 
 build:
   #!/bin/sh
@@ -34,3 +31,7 @@ run:
     just generate-nginx-conf
     {{nginx}} -s reload
   done
+
+[default]
+_list:
+  @just --list --unsorted
