@@ -2,6 +2,7 @@ local string_find = string.find
 local string_gmatch = string.gmatch
 local string_lower = string.lower
 local table_insert = table.insert
+local table_sort = table.sort
 local ngx_var = ngx.var
 local ngx_exit = ngx.exit
 local ngx_say = ngx.say
@@ -62,20 +63,20 @@ _M.main = function()
     ngx_say(get_ip())
 end
 
-local print_header = function(header, value)
+local print_header = function(name, value)
     if hide_proxy_headers then
-        local header_lower = string_lower(header)
-        if header_lower == 'via' then
+        local name_lower = string_lower(name)
+        if name_lower == 'via' then
             return
         end
-        if header_lower == 'x-real-ip' then
+        if name_lower == 'x-real-ip' then
             return
         end
-        if string_find(header_lower, '^x%-forwarded%-.+') then
+        if string_find(name_lower, '^x%-forwarded%-.+') then
             return
         end
     end
-    ngx_say(header, ': ', value)
+    ngx_say(name, ': ', value)
 end
 
 _M.headers = function()
@@ -83,13 +84,19 @@ _M.headers = function()
     if err and err ~= 'truncated' then
         return ngx_exit(500)
     end
-    for header, value_or_values in pairs(headers) do
+    local names = {}
+    for name, _ in pairs(headers) do
+        table_insert(names, name)
+    end
+    table_sort(names)
+    for _, name in ipairs(names) do
+        local value_or_values = headers[name]
         if type(value_or_values) == 'table' then
             for _, value in ipairs(value_or_values) do
-                print_header(header, value)
+                print_header(name, value)
             end
         else
-            print_header(header, value_or_values)
+            print_header(name, value_or_values)
         end
     end
 end
