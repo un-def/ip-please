@@ -64,6 +64,9 @@ end
 local print_header = function(header, value)
     if hide_proxy_headers then
         local header_lower = string_lower(header)
+        if header_lower == 'via' then
+            return
+        end
         if header_lower == 'x-real-ip' then
             return
         end
