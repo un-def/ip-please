@@ -1,7 +1,7 @@
 ARG VERSION
 ARG LISTEN_PORT=80
 
-FROM alpine:latest as builder
+FROM alpine:latest AS builder
 ARG VERSION
 ARG LISTEN_PORT
 WORKDIR /build/
